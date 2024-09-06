@@ -1,7 +1,10 @@
 <?php
 
 
-class Empresa {
+include_once 'Database.php';
+
+class Empresa
+{
 
     private $id;
     private $nome;
@@ -16,72 +19,138 @@ class Empresa {
         $this->cnpj = $cnpj;
         $this->endereco = $endereco;
         $this->telefone = $telefone;
-
     }
 
     //Getter e Setter
 
-    function getId(){
+    function getId()
+    {
         return $this->id;
     }
 
-    function getNome(){
+    function getNome()
+    {
         return $this->nome;
     }
 
-    function getCnpj(){
+    function getCnpj()
+    {
         return $this->cnpj;
     }
 
-    function getEndereco(){
+    function getEndereco()
+    {
         return $this->endereco;
     }
 
-    function getTelefone(){
+    function getTelefone()
+    {
         return $this->telefone;
     }
 
-    function setId($id){
+    function setId($id)
+    {
         $this->id  = $id;
     }
 
-    function setNome($nome){
+    function setNome($nome)
+    {
         $this->nome  = $nome;
     }
 
-    function setCnpj($cnpj){
+    function setCnpj($cnpj)
+    {
         $this->cnpj  = $cnpj;
     }
 
-    function setEndereco($endereco){
+    function setEndereco($endereco)
+    {
         $this->endereco  = $endereco;
     }
 
-    function setTelefone($telefone){
+    function setTelefone($telefone)
+    {
         $this->telefone  = $telefone;
     }
 
     // Método para incluir empresa no BD
-    function cadastrar(){
+    function create()
+    {
 
+        // Obtém a conexão com o BD
+        $db = Database::getInstance();
+        $conn = $db->connect();
+
+        // Preparar a consulta SQL
+        $stmt = $conn->prepare("INSERT INTO empresa (nome, cnpj, endereco, telefone) VALUES (?,?,?,?)");
+        $stmt->bind_param("ssss", $this->nome, $this->cnpj, $this->endereco, $this->telefone);
+
+        // Executa consulta
+
+        if ($stmt->execute()) {
+            $stmt->close();
+            $db->closeConnection();
+            return true;
+        } else {
+            $stmt->close();
+            $db->closeConnection();
+            return false;
+        }
     }
 
     // Método para atualizar empresa no BD
-    function atualizar(){
+    function update()
+    {
+        // Obtém a conexão com o BD
+        $db = Database::getInstance();
+        $conn = $db->connect();
 
+        // Preparar a consulta SQL
+        $stmt = $conn->prepare("UPDATE empresa set nome = ?, cnpj = ?, endereco = ?, telefone = ? WHERE id = ?");
+        $stmt->bind_param("ssssi", $this->nome, $this->cnpj, $this->endereco, $this->telefone, $this->id);
+
+        // Executa consulta
+        if ($stmt->execute()) {
+            $stmt->close();
+            $db->closeConnection();
+            return true;
+        } else {
+            $stmt->close();
+            $db->closeConnection();
+            return false;
+        }
     }
 
     // Método para apagar empresa no BD
-    function apagar(){
+    function delete()
+    {
+        // Obtém a conexão com o BD
+        $db = Database::getInstance();
+        $conn = $db->connect();
 
+        // Preparar a consulta SQL
+        $stmt = $conn->prepare("DELETE FROM empresa WHERE id = ?");
+        $stmt->bind_param("i", $this->id);
+
+        // Executa consulta
+
+        if ($stmt->execute()) {
+            $stmt->close();
+            $db->closeConnection();
+            return true;
+        } else {
+            $stmt->close();
+            $db->closeConnection();
+            return false;
+        }
     }
 
 
+    function getById($id){
 
+    }
 
+    function getAll(){
+
+    }
 }
-
-
-
-
-?>
