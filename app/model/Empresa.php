@@ -146,11 +146,39 @@ class Empresa
     }
 
 
-    function getById($id){
+    function getById($id)
+    {
+        $db = Database::getInstance();
+        $conn = $db->connect();
 
+        $stmt = $conn->prepare("SELECT * FROM empresa WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($row = $result->fetch_assoc()) {
+            $conn->close();
+            return new Empresa($row['id'], $row['nome'], $row['cnpj'], $row['endereco'], $row['telefone']);
+        }
+        $conn->close();
+        return null;
     }
 
-    function getAll(){
+    function getAll()
+    {
+        $db = Database::getInstance();
+        $conn = $db->connect();
 
+        $query = "SELECT * FROM empresa";
+        $result = $conn->query($query);
+
+        $empresas = [];
+
+        while ($row = $result->fetch_assoc()){
+            $empresas[] = new Empresa($row['id'], $row['nome'], $row['cnpj'], $row['endereco'], $row['telefone']);
+        }
+
+        $conn->close();
+        return $empresas;
     }
 }
