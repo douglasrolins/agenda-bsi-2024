@@ -2,10 +2,8 @@
     // Configurações de conexão com o banco de dados MySQL
 
     define('DB_HOST',  'localhost');
-    define('DB_USER',  '');
-    define('DB_PASSWORD',  '');
-    define('DB_NAME',  '');
-
-
+    define('DB_USER',  'douglas');
+    define('DB_PASSWORD',  'Douglas@1');
+    define('DB_NAME',  'agenda-bsi');
 
 ?>

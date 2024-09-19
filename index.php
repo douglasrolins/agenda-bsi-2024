@@ -16,6 +16,7 @@ function loadController($controllerName)
 }
 
 $route = $_GET['route'] ?? 'index';
+$action = $_GET['action'] ?? 'list';
 
 
 $controllerName = ucfirst($route) . 'Controller';
@@ -32,7 +33,7 @@ if (class_exists($controllerName)) {
     $params = array_merge($_POST, $_GET);
 
     // Lida com a requisicao
-    $controller->handleRequest($params);
+    $controller->handleRequest($action, $params);
 
 }
 else {

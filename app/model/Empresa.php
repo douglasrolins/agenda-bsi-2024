@@ -164,7 +164,7 @@ class Empresa
         return null;
     }
 
-    function getAll()
+    static function getAll()
     {
         $db = Database::getInstance();
         $conn = $db->connect();
