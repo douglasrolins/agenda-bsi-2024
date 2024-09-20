@@ -8,8 +8,8 @@ class EmpresaView
 
         echo "
         <h3>Nova Empresa</h3>
-        <form action='?route=empresa' method='post' enctype='multipart/form-data'>
-            <input type='hidden' name='action' value='create'>
+        <form action='?route=empresa&action=create' method='post' enctype='multipart/form-data'>
+           
             <div>
                 <label for='nome'>Nome:</label>
                 <input type='text' id='nome' name='nome' required>
@@ -33,10 +33,49 @@ class EmpresaView
 
 
     // Formulário de edição da empresa
-    public function showEditEmpresa() {}
+    public function showEditEmpresa($empresa)
+    {
+        echo "
+            <h2>Editar Empresa</h2>
+            <form action='?route=empresa&action=update' method='post' enctype='multipart/form-data'>
+                <input type='hidden' name='action' value='update'>
+                <input type='hidden' name='id' value='{$empresa->getId()}'>
+               
+                <div>
+                    <label for='nome'>Nome:</label>
+                    <input type='text' id='nome' name='nome' required value='{$empresa->getNome()}'>
+                </div>
+                <div>
+                    <label for='cnpj'>CNPJ:</label>
+                    <input type='text' id='cnpj' name='cnpj' value='{$empresa->getCnpj()}'>
+                </div>
+                <div>
+                    <label for='endereco'>Endereço:</label>
+                    <input type='text' id='endereco' name='endereco' value='{$empresa->getEndereco()}'>
+                </div>
+
+                <div >
+                    <label for='telefone'>Telefone:</label>
+                    <input type='text' id='telefone' name='telefone' value='{$empresa->getTelefone()}'>
+                </div>
+
+                <button type='submit'>Atualizar</button>
+            </form>
+        ";
+    }
 
     // Página inicial de Empresas (listagem)
-    public function listEmpresas($empresas) {
+    public function listEmpresas($empresas)
+    {
+
+        if (isset($_SESSION['message'])) {
+            
+            $message = $_SESSION['message'];
+            echo "<div style='text-align: center; color:green;'>{$message}</div><br>";
+
+            // Limpa a mensagem após exibi-la
+            unset($_SESSION['message']);
+        }
 
         echo "<div style='place-items: center; display: grid;' >";
         echo "<button type='submit' onclick=\"window.location.href='?route=empresa&action=create'\">Inserir Empresa</button>";
@@ -54,6 +93,5 @@ class EmpresaView
         }
         echo "</table>";
         echo "</div>";
-
     }
 }

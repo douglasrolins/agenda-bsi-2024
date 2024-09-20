@@ -13,8 +13,9 @@ class Empresa
     private $telefone;
 
 
-    function __construct($nome, $cnpj, $endereco, $telefone)
+    function __construct($id, $nome, $cnpj, $endereco, $telefone)
     {
+        $this->id = $id;
         $this->nome = $nome;
         $this->cnpj = $cnpj;
         $this->endereco = $endereco;
@@ -83,6 +84,7 @@ class Empresa
 
         // Preparar a consulta SQL
         $stmt = $conn->prepare("INSERT INTO empresa (nome, cnpj, endereco, telefone) VALUES (?,?,?,?)");
+        echo $this->telefone;
         $stmt->bind_param("ssss", $this->nome, $this->cnpj, $this->endereco, $this->telefone);
 
         // Executa consulta
@@ -146,7 +148,7 @@ class Empresa
     }
 
 
-    function getById($id)
+    static function getById($id)
     {
         $db = Database::getInstance();
         $conn = $db->connect();

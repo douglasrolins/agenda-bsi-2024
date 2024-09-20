@@ -3,6 +3,8 @@
 include_once 'includes/header.php';
 
 
+session_start();
+
 function loadController($controllerName)
 {
     $file = 'app/controller/' . $controllerName . '.php';

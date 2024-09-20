@@ -9,16 +9,20 @@
 
     <link rel="stylesheet" href="https://unpkg.com/marx-css/css/marx.min.css">
 
+    <script src="includes\js\scripts.js"></script>
+
 </head>
 
 <body>
     <header>
-        <div>
-            <img src="includes\img\logo.png" alt="Logo da Aplicação" width="300px">
+        <div style="place-items:center;display:grid;">
+            <a href="/agenda">
+                <img src="includes\img\logo.png" alt="Logo da Aplicação" width="300px">
+            </a>
             <nav>
                 <ul>
-                    <li>Início</li>
-                    <li>Empresas</li>
+                    <li><a href="/agenda">Início</a></li>
+                    <li><a href="?route=empresa">Empresas</a></li>
                 </ul>
             </nav>
         </div>
