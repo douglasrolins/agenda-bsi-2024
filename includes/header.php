@@ -22,7 +22,25 @@
             <nav>
                 <ul>
                     <li><a href="/agenda">Início</a></li>
-                    <li><a href="?route=empresa">Empresas</a></li>
+
+                    <?php
+
+                    if (!isset($_SESSION['user_id'])): ?>
+
+                        <li><a href="?route=login">Login</a></li>
+
+                    <?php endif; ?>
+
+
+                    <?php
+
+                    if (isset($_SESSION['user_id'])): ?>
+
+                        <li><a href="?route=empresa">Empresas</a></li>
+                        <li><a href="?route=login&action=logout">Logout</a></li>
+
+                    <?php endif; ?>
+
                 </ul>
             </nav>
         </div>

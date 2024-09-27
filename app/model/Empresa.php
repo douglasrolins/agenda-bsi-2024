@@ -176,7 +176,29 @@ class Empresa
 
         $empresas = [];
 
-        while ($row = $result->fetch_assoc()){
+        while ($row = $result->fetch_assoc()) {
+            $empresas[] = new Empresa($row['id'], $row['nome'], $row['cnpj'], $row['endereco'], $row['telefone']);
+        }
+
+        $conn->close();
+        return $empresas;
+    }
+
+
+    static function searchByName($query)
+    {
+        $db = Database::getInstance();
+        $conn = $db->connect();
+
+        $stmt = $conn->prepare("SELECT * FROM empresa WHERE nome LIKE ?");
+        // Adiciona os caracteres de wildcard para o LIKE
+        $name = '%' . $query . '%'; 
+        $stmt->bind_param('s', $name);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $empresas = [];
+        while ($row = $result->fetch_assoc()) {
             $empresas[] = new Empresa($row['id'], $row['nome'], $row['cnpj'], $row['endereco'], $row['telefone']);
         }
 

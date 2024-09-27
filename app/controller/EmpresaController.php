@@ -73,6 +73,17 @@ class EmpresaController
                     }
                     break;
 
+                case 'search':
+                    $query = $params['query'] ?? '';
+
+                    // Buscar empresas pelo nome
+                    $empresas = Empresa::searchByName($query);
+
+                    $view = new EmpresaView;
+                    $view->listEmpresasAjax($empresas);
+
+                    break;
+
                     // Listar as empresas
                 case 'list':
 
